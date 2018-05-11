@@ -1,6 +1,8 @@
 package com.zhuke.comlibrary.http;
 
 import com.zhuke.comlibrary.content.ContentUrl;
+import com.zhuke.comlibrary.http.ConverterFactory.DesConverterFactory;
+import com.zhuke.comlibrary.http.ConverterFactory.StringConverterFactory;
 import com.zhuke.comlibrary.http.Interceptor.EncryptInterceptor;
 import com.zhuke.comlibrary.http.Interceptor.InterceptorUtil;
 import com.zhuke.comlibrary.http.service.Service;
@@ -25,12 +27,14 @@ public class RetrofitManage {
                 .connectTimeout(ContentUrl.HTTP_TIME, TimeUnit.SECONDS)
                 .readTimeout(ContentUrl.HTTP_TIME, TimeUnit.SECONDS)
                 .writeTimeout(ContentUrl.HTTP_TIME, TimeUnit.SECONDS)
+                .addInterceptor(new EncryptInterceptor())//加密解密拦截器
                 .addInterceptor(InterceptorUtil.HeaderInterceptor())
                 .addInterceptor(InterceptorUtil.LogInterceptor())//添加日志拦截器
-//                .addInterceptor(new EncryptInterceptor())//加密解密拦截器
                 .build();
         Retrofit mRetrofit=new Retrofit.Builder()
                 .baseUrl(ContentUrl.baseUrl)
+                .addConverterFactory(DesConverterFactory.create())//添加对象解密转换器
+                .addConverterFactory(StringConverterFactory.create())//添加返回string类型转换器
                 .addConverterFactory(GsonConverterFactory.create())//添加gson转换器
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加rxjava转换器
                 .client(mOkHttpClient)

@@ -26,6 +26,7 @@ import okio.BufferedSource;
  */
 
 public class EncryptInterceptor implements Interceptor {
+
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();

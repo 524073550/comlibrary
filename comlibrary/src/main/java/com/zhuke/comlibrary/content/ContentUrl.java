@@ -8,6 +8,7 @@ public class ContentUrl {
 
 
       public static final String baseUrl = "http://wuhanxingrong.vicp.io:8885/";
+//      public static final String baseUrl = "http://192.168.0.23:8886/";
 
     public static final String LOGINACTION = "xgf/user/login";//登录
 
